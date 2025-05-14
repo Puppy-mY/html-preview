@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アセスメント入力フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .tab-content {
+      background-color: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    .nav-tabs .nav-link.active {
+      background-color: #e0f0ff;
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+    .nav-tabs .nav-link {
+      color: #2a7fa2;
+    }
+    .form-title {
+      color: #2a7fa2;
+      font-weight: bold;
+    }
+    .accordion-button:not(.collapsed) {
+      background-color: #e7f1ff;
+      color: #2a7fa2;
+    }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1a5e7a;
+    }
+    .section-title i {
+      margin-right: 0.5rem;
+    }
+    .form-text {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <h3 class="text-center form-title mb-4">📝 アセスメントフォーム</h3>
+  <div class="progress mb-3">
+    <div class="progress-bar bg-info" role="progressbar" style="width: 25%;">ステップ 1 / 4</div>
+  </div>
+  <form method="POST">
+    <ul class="nav nav-tabs mb-3" id="tabMenu" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">📋 基本情報</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="physical-tab" data-bs-toggle="tab" data-bs-target="#physical" type="button" role="tab">🩺 身体の状況</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="adl-tab" data-bs-toggle="tab" data-bs-target="#adl" type="button" role="tab">🚶‍♀️ 日常生活動作</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab">📝 特記事項</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="basic" role="tabpanel">
+        <div class="section-title"><i class="bi bi-person-lines-fill"></i>基本情報</div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">利用者氏名</label>
+            <input type="text" class="form-control" name="name" value="{{ resident.name }}" readonly>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">作成日</label>
+            <input type="date" class="form-control" name="created_at">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">作成者</label>
+            <input type="text" class="form-control" name="created_by">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">アセスメントの理由</label>
+          <textarea class="form-control" name="reason" placeholder="例：定期アセスメントのため"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">面談場所</label>
+          <input type="text" class="form-control" name="interview_place" placeholder="例：利用者自宅、事業所など">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">生活歴</label>
+          <textarea class="form-control" name="life_history" placeholder="例：農業従事、介護経験あり、配偶者と死別"></textarea>
+          <div class="form-text">これまでの職業・生活環境などを記入</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">本人の希望</label>
+            <textarea class="form-control" name="user_wish" placeholder="例：できるだけ自宅で過ごしたい"></textarea>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">家族の希望</label>
+            <textarea class="form-control" name="family_wish" placeholder="例：家族も支援しつつ訪問介護を利用したい"></textarea>
+          </div>
+        </div>
+
+        <!-- その後のセクションも同様の形式で続きます -->
+      </div>
+    </div>
+    <div class="mt-4 text-end">
+      <button type="submit" class="btn btn-primary">💾 保存する</button>
+    </div>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</body>
+</html>

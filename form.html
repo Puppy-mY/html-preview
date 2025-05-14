@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アセスメント入力フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .tab-content {
+      background-color: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    .nav-tabs .nav-link.active {
+      background-color: #e0f0ff;
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+    .nav-tabs .nav-link {
+      color: #2a7fa2;
+    }
+    .form-title {
+      color: #2a7fa2;
+      font-weight: bold;
+    }
+    .accordion-button:not(.collapsed) {
+      background-color: #e7f1ff;
+      color: #2a7fa2;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <h3 class="text-center form-title mb-4">📝 アセスメントフォーム</h3>
+  <form method="POST">
+    <ul class="nav nav-tabs mb-3" id="tabMenu" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">基本情報</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="physical-tab" data-bs-toggle="tab" data-bs-target="#physical" type="button" role="tab">身体の状況</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="adl-tab" data-bs-toggle="tab" data-bs-target="#adl" type="button" role="tab">日常生活動作</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab">特記事項</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- 基本情報 -->
+      <div class="tab-pane fade show active" id="basic" role="tabpanel">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">利用者氏名</label>
+            <input type="text" class="form-control" name="name" value="{{ resident.name }}" readonly>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">作成日</label>
+            <input type="date" class="form-control" name="created_at">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">作成者</label>
+            <input type="text" class="form-control" name="created_by">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">アセスメントの理由</label>
+          <textarea class="form-control" name="reason"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">面談場所</label>
+          <input type="text" class="form-control" name="interview_place">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">生活歴</label>
+          <textarea class="form-control" name="life_history"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">本人の希望</label>
+            <textarea class="form-control" name="user_wish"></textarea>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">家族の希望</label>
+            <textarea class="form-control" name="family_wish"></textarea>
+          </div>
+        </div>
+
+        <hr class="my-4">
+        <h5 class="form-title">保険情報</h5>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">要介護度</label>
+            <select class="form-select" name="care_level">
+              <option disabled selected>選択してください</option>
+              <option value="要支援1">要支援1</option>
+              <option value="要支援2">要支援2</option>
+              <option value="要介護1">要介護1</option>
+              <option value="要介護2">要介護2</option>
+              <option value="要介護3">要介護3</option>
+              <option value="要介護4">要介護4</option>
+              <option value="要介護5">要介護5</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">負担割合</label>
+            <input type="text" class="form-control" name="burden_ratio">
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">医療保険</label>
+            <input type="text" class="form-control" name="medical_insurance">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">身体障がい者手帳の有無</label>
+            <select class="form-select" name="disability_certificate">
+              <option value="">選択してください</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">手帳の種類（有の場合）</label>
+            <input type="text" class="form-control" name="certificate_type">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">難病の有無</label>
+            <select class="form-select" name="intractable_disease">
+              <option value="">選択してください</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">生活保護の有無</label>
+            <select class="form-select" name="public_assistance">
+              <option value="">選択してください</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">障がい者日常生活自立度</label>
+            <input type="text" class="form-control" name="disability_independence">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">認知症日常生活自立度</label>
+          <input type="text" class="form-control" name="dementia_independence">
+        </div>
+
+        <hr class="my-4">
+        <h5 class="form-title">家族状況</h5>
+        <div class="accordion mb-3" id="familyAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                家族①
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label class="form-label">氏名</label>
+                    <input type="text" class="form-control" name="family1_name">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">続柄</label>
+                    <input type="text" class="form-control" name="family1_relation">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">同居</label>
+                    <select class="form-select" name="family1_living">
+                      <option value="">選択</option>
+                      <option value="同居">同居</option>
+                      <option value="別居">別居</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label class="form-label">介護</label>
+                    <select class="form-select" name="family1_care">
+                      <option value="">選択</option>
+                      <option value="する">する</option>
+                      <option value="しない">しない</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">就労</label>
+                    <select class="form-select" name="family1_work">
+                      <option value="">選択</option>
+                      <option value="している">している</option>
+                      <option value="していない">していない</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">連絡先</label>
+                    <input type="text" class="form-control" name="family1_contact">
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">備考</label>
+                  <textarea class="form-control" name="family1_remarks"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                家族②
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <!-- 同上、family2_ に置換して使用 -->
+                ...（省略）...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+        <h5 class="form-title">居住状況</h5>
+        <div class="mb-3">
+          <label class="form-label">家庭環境</label>
+          <textarea class="form-control" name="home_environment"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">住宅形態</label>
+            <input type="text" class="form-control" name="house_type">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">住宅権利</label>
+            <input type="text" class="form-control" name="house_right">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">専有居室</label>
+            <input type="text" class="form-control" name="private_room">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">冷暖房</label>
+            <input type="text" class="form-control" name="air_conditioning">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">トイレ</label>
+            <input type="text" class="form-control" name="toilet">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">浴室</label>
+            <input type="text" class="form-control" name="bathroom">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">就寝</label>
+            <input type="text" class="form-control" name="sleeping">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">住宅改修</label>
+            <input type="text" class="form-control" name="home_modification">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">住宅改修の必要性</label>
+          <textarea class="form-control" name="home_modification_need"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">特別な状況</label>
+          <textarea class="form-control" name="special_situation"></textarea>
+        </div>
+
+        <hr class="my-4">
+        <h5 class="form-title">利用サービス</h5>
+        <div class="mb-3">
+          <label class="form-label">介護サービス</label>
+          <textarea class="form-control" name="care_service"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">福祉用具</label>
+          <textarea class="form-control" name="welfare_goods"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">上記以外のサービス</label>
+          <textarea class="form-control" name="other_service"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">インフォーマルサービス</label>
+          <textarea class="form-control" name="informal_service"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">社会との関わり</label>
+          <textarea class="form-control" name="social_involvement"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 text-end">
+      <button type="submit" class="btn btn-primary">💾 保存する</button>
+    </div>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

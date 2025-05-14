@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>サイドナビ形式アセスメント</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+    }
+    .nav-link.active {
+      font-weight: bold;
+      color: #0d6efd !important;
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        position: static;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid py-4">
+  <h3 class="text-center mb-4">📋 サイドナビ形式 アセスメントフォーム</h3>
+  <div class="row">
+    <!-- サイドナビ -->
+    <div class="col-md-3 sidebar">
+      <div class="list-group">
+        <a href="#section-basic" class="list-group-item list-group-item-action nav-link">基本情報</a>
+        <a href="#section-health" class="list-group-item list-group-item-action nav-link">健康情報</a>
+        <a href="#section-residence" class="list-group-item list-group-item-action nav-link">居住状況</a>
+      </div>
+    </div>
+
+    <!-- メインフォーム -->
+    <div class="col-md-9">
+      <form>
+
+        <!-- 基本情報 -->
+        <section id="section-basic" class="mb-5">
+          <h5>🧍 基本情報</h5>
+          <div class="mb-3">
+            <label class="form-label">氏名</label>
+            <input type="text" name="name" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">生年月日</label>
+            <input type="date" name="birthdate" class="form-control">
+          </div>
+        </section>
+
+        <!-- 健康情報 -->
+        <section id="section-health" class="mb-5">
+          <h5>🩺 健康情報</h5>
+          <div class="mb-3">
+            <label class="form-label">主治医</label>
+            <input type="text" name="doctor" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">既往歴</label>
+            <textarea name="history" class="form-control" rows="3"></textarea>
+          </div>
+        </section>
+
+        <!-- 居住状況 -->
+        <section id="section-residence" class="mb-5">
+          <h5>🏠 居住状況</h5>
+          <div class="mb-3">
+            <label class="form-label">住宅形態</label>
+            <input type="text" name="residence_type" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">冷暖房の有無</label>
+            <select name="air_conditioning" class="form-select">
+              <option value="">選択してください</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+        </section>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">💾 保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // スムーズスクロール
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+      link.classList.add('active');
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

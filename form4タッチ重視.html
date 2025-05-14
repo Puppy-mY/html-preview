@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アセスメント（タッチ操作向け）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #f0f2f5;">
+  <div class="container py-4">
+
+    <h3 class="text-center mb-4">📱 タッチ操作に最適化したアセスメントフォーム</h3>
+
+    <form method="POST" class="bg-white p-4 rounded shadow">
+
+      <!-- 利用者氏名（表示のみ） -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">利用者氏名</label>
+        <input type="text" class="form-control" value="山田 太郎" readonly>
+      </div>
+
+      <!-- 作成日 -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">作成日</label>
+        <input type="date" name="created_at" class="form-control">
+      </div>
+
+      <!-- 作成者 -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">作成者</label>
+        <input type="text" name="created_by" class="form-control">
+      </div>
+
+      <!-- 性別（ボタン形式） -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">性別</label>
+        <div class="btn-group w-100" role="group">
+          <input type="radio" class="btn-check" name="gender" id="male" value="男">
+          <label class="btn btn-outline-primary" for="male">男</label>
+
+          <input type="radio" class="btn-check" name="gender" id="female" value="女">
+          <label class="btn btn-outline-primary" for="female">女</label>
+        </div>
+      </div>
+
+      <!-- 要介護度（ボタン形式） -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">要介護度</label>
+        <div class="btn-group w-100 flex-wrap" role="group">
+          <input type="radio" class="btn-check" name="care_level" id="support1" value="要支援1">
+          <label class="btn btn-outline-success m-1" for="support1">要支援1</label>
+
+          <input type="radio" class="btn-check" name="care_level" id="support2" value="要支援2">
+          <label class="btn btn-outline-success m-1" for="support2">要支援2</label>
+
+          <input type="radio" class="btn-check" name="care_level" id="level1" value="要介護1">
+          <label class="btn btn-outline-success m-1" for="level1">要介護1</label>
+
+          <input type="radio" class="btn-check" name="care_level" id="level2" value="要介護2">
+          <label class="btn btn-outline-success m-1" for="level2">要介護2</label>
+
+          <input type="radio" class="btn-check" name="care_level" id="level3" value="要介護3">
+          <label class="btn btn-outline-success m-1" for="level3">要介護3</label>
+
+          <input type="radio" class="btn-check" name="care_level" id="level4" value="要介護4">
+          <label class="btn btn-outline-success m-1" for="level4">要介護4</label>
+
+          <input type="radio" class="btn-check" name="care_level" id="level5" value="要介護5">
+          <label class="btn btn-outline-success m-1" for="level5">要介護5</label>
+        </div>
+      </div>
+
+      <!-- 難病の有無（ボタン） -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">難病の有無</label>
+        <div class="btn-group w-100" role="group">
+          <input type="radio" class="btn-check" name="intractable_disease" id="yes" value="有">
+          <label class="btn btn-outline-danger" for="yes">有</label>
+
+          <input type="radio" class="btn-check" name="intractable_disease" id="no" value="無">
+          <label class="btn btn-outline-danger" for="no">無</label>
+        </div>
+      </div>
+
+      <!-- 保存ボタン -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-lg btn-primary">💾 保存する</button>
+      </div>
+
+    </form>
+  </div>
+</body>
+</html>

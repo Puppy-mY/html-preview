@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>カード風パネル切替フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .panel-tab {
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      padding: 0.5rem 1rem;
+      color: #555;
+    }
+    .panel-tab.active {
+      border-color: #0d6efd;
+      font-weight: bold;
+      color: #0d6efd;
+    }
+    .panel-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .panel-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(15px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body style="background-color: #f8f9fa;">
+<div class="container my-5">
+  <h3 class="text-center mb-4">🗂️ パネル切替式 アセスメントフォーム</h3>
+
+  <!-- タブナビ -->
+  <div class="d-flex justify-content-center mb-3 flex-wrap">
+    <div class="panel-tab active" onclick="showPanel('basic')">🧍 基本情報</div>
+    <div class="panel-tab" onclick="showPanel('health')">🩺 健康</div>
+    <div class="panel-tab" onclick="showPanel('residence')">🏠 居住</div>
+  </div>
+
+  <!-- フォーム -->
+  <form method="POST" class="card p-4 shadow-sm bg-white">
+
+    <!-- 基本情報 -->
+    <div class="panel-content active" id="panel-basic">
+      <h5>🧍 基本情報</h5>
+      <div class="mb-3">
+        <label class="form-label">氏名</label>
+        <input type="text" name="name" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">生年月日</label>
+        <input type="date" name="birthdate" class="form-control">
+      </div>
+    </div>
+
+    <!-- 健康 -->
+    <div class="panel-content" id="panel-health">
+      <h5>🩺 健康情報</h5>
+      <div class="mb-3">
+        <label class="form-label">主治医</label>
+        <input type="text" name="doctor" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">既往歴</label>
+        <textarea name="history" class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+
+    <!-- 居住 -->
+    <div class="panel-content" id="panel-residence">
+      <h5>🏠 居住状況</h5>
+      <div class="mb-3">
+        <label class="form-label">住宅形態</label>
+        <input type="text" name="residence_type" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">冷暖房の有無</label>
+        <select name="air_conditioning" class="form-select">
+          <option value="">選択してください</option>
+          <option value="有">有</option>
+          <option value="無">無</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 送信 -->
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary">💾 保存する</button>
+    </div>
+  </form>
+</div>
+
+<!-- スクリプト -->
+<script>
+  function showPanel(targetId) {
+    document.querySelectorAll('.panel-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.panel-content').forEach(panel => panel.classList.remove('active'));
+
+    document.querySelector(`#panel-${targetId}`).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
