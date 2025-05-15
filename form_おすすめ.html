@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アセスメントフォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .panel-tab {
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      padding: 0.5rem 1rem;
+      color: #555;
+    }
+    .panel-tab.active {
+      border-color: #0d6efd;
+      font-weight: bold;
+      color: #0d6efd;
+    }
+    .panel-content { display: none; }
+    .panel-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(15px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .card + .card { margin-top: 1.5rem; }
+    .card-header {
+      background-color: #e9f4fb;
+      font-weight: bold;
+      color: #1a5e7a;
+    }
+    .form-wrapper {
+      background-color: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+  .highlight-empty {
+    background-color: #fffef0 !important; /* 薄い黄色 */
+  }
+  </style>
+</head>
+<body>
+<div class="container my-5">
+  <h3 class="text-center mb-4">アセスメントフォーム</h3>
+
+  <!-- タブメニュー -->
+  <div class="d-flex justify-content-center mb-3 flex-wrap">
+    <div class="panel-tab active" onclick="showPanel('basic')">基本情報</div>
+    <div class="panel-tab" onclick="showPanel('body')">身体の状況</div>
+    <div class="panel-tab" onclick="showPanel('adl')">日常生活動作</div>
+    <div class="panel-tab" onclick="showPanel('notes')">特記事項</div>
+  </div>
+
+  <!-- 入力フォーム -->
+  <form method="POST" class="form-wrapper">
+
+    <!-- ▼ 基本情報 -->
+    <div class="panel-content active" id="panel-basic">
+      <div class="card">
+        <div class="card-header">利用者情報</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">利用者氏名</label>
+            <input type="text" class="form-control" name="name" value="{{ resident.name }}" readonly>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label class="form-label">性別</label>
+              <input type="text" class="form-control" value="{{ resident.gender }}" readonly>
+            </div>
+            <div class="col-md-9">
+              <label class="form-label">生年月日（和暦）</label>
+              <div class="d-flex align-items-center gap-1 flex-nowrap">
+                <input type="text" class="form-control" style="width: 80px;" value="{{ resident.birth_era }}" readonly>
+                <input type="text" class="form-control" style="width: 60px;" value="{{ resident.birth_year_wa }}" readonly>
+                <span class="small">年</span>
+                <input type="text" class="form-control" style="width: 50px;" value="{{ resident.birth_month }}" readonly>
+                <span class="small">月</span>
+                <input type="text" class="form-control" style="width: 50px;" value="{{ resident.birth_day }}" readonly>
+                <span class="small">日</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-8">
+              <label class="form-label">住所</label>
+              <input type="text" class="form-control" value="{{ resident.address }}" readonly>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">連絡先</label>
+              <input type="text" class="form-control" value="{{ resident.phone }}" readonly>
+            </div>
+          </div>
+
+<div class="row mb-3">
+  <!-- 作成日（初期値に今日の日付） -->
+  <div class="col-md-3">
+    <label class="form-label">アセスメント作成日</label>
+    <input type="date" name="created_at" class="form-control" value="{{ today }}">
+  </div>
+
+  <!-- 理由 -->
+  <div class="col-md-3">
+    <label class="form-label">アセスメント理由</label>
+    <select name="reason" class="form-select">
+      <option value="">選択</option>
+      <option value="新規">新規</option>
+      <option value="更新">更新</option>
+      <option value="区分変更">区分変更</option>
+      <option value="退院">退院</option>
+      <option value="情報提供">情報提供</option>
+    </select>
+  </div>
+
+  <!-- 面談場所 -->
+  <div class="col-md-3">
+    <label class="form-label">面談場所</label>
+    <select name="interview_place" class="form-select">
+      <option value="">選択</option>
+      <option value="居室">居室</option>
+      <option value="自宅">自宅</option>
+      <option value="病院">病院</option>
+      <option value="施設">施設</option>
+    </select>
+  </div>
+
+  <!-- 作成者（ケアマネ） -->
+  <div class="col-md-3">
+    <label class="form-label">作成者</label>
+    <input type="text" class="form-control" name="created_by" value="{{ resident.care_manager }}" readonly>
+  </div>
+</div>
+
+          <div class="mb-3">
+            <label class="form-label">生活歴</label>
+            <textarea class="form-control" name="history" rows="3" placeholder="例：農業を長年しており、身体を動かす習慣がある"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">本人の希望</label>
+              <textarea class="form-control" name="wish_self" rows="3" placeholder="例：これまで通り自宅で過ごしたい"></textarea>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">家族の希望</label>
+              <textarea class="form-control" name="wish_family" rows="3" placeholder="例：安全な環境で穏やかに過ごしてほしい"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 他のカード -->
+<div class="card">
+  <div class="card-header">保険情報</div>
+  <div class="card-body">
+    <!-- ▼ 読み取り専用：登録済情報 -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">介護保険被保険者番号</label>
+        <input type="text" class="form-control" value="{{ resident.insurance_number }}" readonly>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">要介護度</label>
+        <input type="text" class="form-control" value="{{ resident.care_level }}" readonly>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">認定日</label>
+        <input type="date" class="form-control" value="{{ resident.certification_date }}" readonly>
+      </div>
+    </div>
+
+<!-- ▼ 認定有効期間：日付＋和暦表示 -->
+<div class="row mb-3">
+  <!-- 認定有効期間 -->
+  <div class="col-md-8">
+    <label class="form-label">認定有効期間</label>
+    <div class="row g-2 align-items-center mb-1">
+      <div class="col-auto">
+        <input type="date" name="insurance_start" class="form-control" id="insurance_start" value="{{ resident.insurance_start }}" readonly>
+      </div>
+      <div class="col-auto">
+        <span class="form-label">〜</span>
+      </div>
+      <div class="col-auto">
+        <input type="date" name="insurance_end" class="form-control" id="insurance_end" value="{{ resident.insurance_end }}" readonly>
+      </div>
+    </div>
+    <!-- 和暦表示 -->
+    <div class="form-text" id="insurance_wareki_display" style="font-size: 1rem; color: #444;">
+      <!-- JavaScriptで自動表示されます -->
+    </div>
+  </div>
+
+  <!-- 負担割合 -->
+  <div class="col-md-4">
+    <label class="form-label">負担割合</label>
+    <select name="burden_ratio" class="form-select">
+      <option value="">選択</option>
+      <option value="1割">1割</option>
+      <option value="2割">2割</option>
+      <option value="3割">3割</option>
+    </select>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <!-- 医療保険（セレクト） -->
+  <div class="col-md-6">
+    <label class="form-label">医療保険</label>
+    <select name="medical_insurance" class="form-select">
+      <option value="">選択</option>
+      <option value="後期高齢者医療保険">後期高齢者医療保険</option>
+      <option value="国民健康保険">国民健康保険</option>
+      <option value="その他">その他</option>
+    </select>
+  </div>
+
+  <!-- その他の医療保険（入力欄） -->
+  <div class="col-md-6">
+    <label class="form-label">その他の医療保険</label>
+    <input type="text" name="medical_insurance_other" class="form-control" placeholder="その他の場合、記載">
+  </div>
+</div>
+
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label class="form-label">身体障がい者手帳</label>
+        <select name="has_disability_card" class="form-select">
+          <option value="">選択</option>
+          <option value="有">有</option>
+          <option value="無">無</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">手帳の種類</label>
+        <select name="disability_grade" class="form-select">
+          <option value="">有｜選択</option>
+          <option value="1級1種">1級1種</option>
+          <option value="1級2種">1級2種</option>
+          <option value="2級1種">2級1種</option>
+          <option value="2級2種">2級2種</option>
+          <option value="3級1種">3級1種</option>
+          <option value="3級2種">3級2種</option>
+          <option value="4級1種">4級1種</option>
+          <option value="4級2種">4級2種</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">難病申請</label>
+        <select name="has_intractable_disease" class="form-select">
+          <option value="">選択</option>
+          <option value="有">有</option>
+          <option value="無">無</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">生活保護</label>
+        <select name="has_livelihood_protection" class="form-select">
+          <option value="">選択</option>
+          <option value="有">有</option>
+          <option value="無">無</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">障がい者日常生活自立度</label>
+        <select name="disability_life_independence" class="form-select">
+          <option value="">選択</option>
+          <option value="自立">自立</option>
+          <option value="J1">J1</option>
+          <option value="J2">J2</option>
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+          <option value="C1">C1</option>
+          <option value="C2">C2</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">認知症日常生活自立度</label>
+        <select name="dementia_life_independence" class="form-select">
+          <option value="">選択</option>
+          <option value="自立">自立</option>
+          <option value="Ⅰ">1</option>
+          <option value="Ⅱa">Ⅱa</option>
+          <option value="Ⅱb">Ⅱb</option>
+          <option value="Ⅲa">Ⅲa</option>
+          <option value="Ⅲb">Ⅲb</option>
+          <option value="Ⅳ">Ⅳ</option>
+          <option value="Ｍ">Ｍ</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <div class="card">
+        <div class="card-header">家族状況</div>
+        <div class="card-body">ここに家族情報など</div>
+      </div>
+      <div class="card">
+        <div class="card-header">住居状況</div>
+        <div class="card-body">ここに住居情報など</div>
+      </div>
+      <div class="card">
+        <div class="card-header">利用サービス</div>
+        <div class="card-body">ここにサービス内容など</div>
+      </div>
+    </div>
+
+    <!-- ▼ 身体の状況 -->
+    <div class="panel-content" id="panel-body">
+      <div class="card">
+        <div class="card-header">健康状態</div>
+        <div class="card-body">ここに健康状態</div>
+      </div>
+      <div class="card">
+        <div class="card-header">身体状況</div>
+        <div class="card-body">ここに身体状況</div>
+      </div>
+      <div class="card">
+        <div class="card-header">基本動作</div>
+        <div class="card-body">ここに動作項目</div>
+      </div>
+      <div class="card">
+        <div class="card-header">認知</div>
+        <div class="card-body">ここに認知項目</div>
+      </div>
+    </div>
+
+    <!-- ▼ 日常生活動作 -->
+    <div class="panel-content" id="panel-adl">
+      <div class="card">
+        <div class="card-header">食事</div>
+        <div class="card-body">ここに食事情報</div>
+      </div>
+      <div class="card">
+        <div class="card-header">口腔</div>
+        <div class="card-body">ここに口腔情報</div>
+      </div>
+      <div class="card">
+        <div class="card-header">入浴</div>
+        <div class="card-body">ここに入浴情報</div>
+      </div>
+      <div class="card">
+        <div class="card-header">更衣</div>
+        <div class="card-body">ここに更衣情報</div>
+      </div>
+      <div class="card">
+        <div class="card-header">排泄</div>
+        <div class="card-body">ここに排泄情報</div>
+      </div>
+      <div class="card">
+        <div class="card-header">IADL</div>
+        <div class="card-body">ここにIADL情報</div>
+      </div>
+    </div>
+
+    <!-- ▼ 特記事項 -->
+    <div class="panel-content" id="panel-notes">
+      <div class="card">
+        <div class="card-header">特記事項</div>
+        <div class="card-body">ここに特記事項</div>
+      </div>
+    </div>
+
+    <!-- 保存ボタン -->
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary">保存する</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function showPanel(targetId) {
+    document.querySelectorAll('.panel-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.panel-content').forEach(panel => panel.classList.remove('active'));
+    document.querySelector(`#panel-${targetId}`).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function toWareki(value) {
+    const date = new Date(value);
+    const y = date.getFullYear();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+    if (isNaN(y)) return "";
+    if (y >= 2019) return `令和${y - 2018}年${m}月${d}日`;
+    if (y >= 1989) return `平成${y - 1988}年${m}月${d}日`;
+    if (y >= 1926) return `昭和${y - 1925}年${m}月${d}日`;
+    return `${y}年${m}月${d}日`;
+  }
+
+  function updatePeriodDisplay() {
+    const start = toWareki(document.getElementById("insurance_start").value);
+    const end = toWareki(document.getElementById("insurance_end").value);
+    const display = document.getElementById("insurance_wareki_display");
+    display.textContent = start && end ? `${start} 〜 ${end}` : (start || '') + (start && end ? ' 〜 ' : '') + (end || '');
+  }
+
+  document.getElementById("insurance_start")?.addEventListener("change", updatePeriodDisplay);
+  document.getElementById("insurance_end")?.addEventListener("change", updatePeriodDisplay);
+  document.addEventListener("DOMContentLoaded", updatePeriodDisplay);
+
+  // 入力されていない項目を薄い黄色にする
+  document.addEventListener('DOMContentLoaded', function () {
+    const inputs = document.querySelectorAll('input, select, textarea');
+
+    function checkEmpty(el) {
+      if (!el.readOnly && !el.disabled && el.value.trim() === '') {
+        el.classList.add('highlight-empty');
+      } else {
+        el.classList.remove('highlight-empty');
+      }
+    }
+
+    inputs.forEach(el => {
+      checkEmpty(el); // 初期状態のチェック
+      el.addEventListener('change', () => checkEmpty(el));
+      el.addEventListener('input', () => checkEmpty(el));
+    });
+  });
+</script>
+</body>
+</html>
