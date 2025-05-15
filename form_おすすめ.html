@@ -41,6 +41,32 @@
   .highlight-empty {
     background-color: #fffef0 !important; /* 薄い黄色 */
   }
+  .accordion-button.keep-bg {
+    background-color: #e9f4fb !important;
+    color: #1a5e7a;
+    font-weight: bold;
+    border: none;
+    box-shadow: none;
+  }
+  .accordion-button.keep-bg.collapsed {
+    background-color: #e9f4fb !important;
+  }
+/* アコーディオンの見出しの高さをカードと同じくらいにする */
+.accordion-button.keep-bg {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  min-height: auto;
+}
+.card-header {
+  font-size: 1.1rem; }
+
+.accordion-button.keep-bg {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.1rem;
+  min-height: auto;
+}
+
   </style>
 </head>
 <body>
@@ -179,7 +205,7 @@
   <!-- 認定有効期間 -->
   <div class="col-md-8">
     <label class="form-label">認定有効期間</label>
-    <div class="row g-2 align-items-center mb-1">
+    <div class="row g-2 align-items-center mb-2">
       <div class="col-auto">
         <input type="date" name="insurance_start" class="form-control" id="insurance_start" value="{{ resident.insurance_start }}" readonly>
       </div>
@@ -302,20 +328,376 @@
   </div>
 </div>
 
+<div class="accordion mt-4" id="accordion-housing">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-housing">
+      <button class="accordion-button keep-bg collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse-housing"
+              aria-expanded="false" aria-controls="collapse-housing">
+        👪 家族状況
+      </button>
+    </h2>
+    <div id="collapse-housing" class="accordion-collapse collapse"
+         aria-labelledby="heading-housing" data-bs-parent="#accordion-housing">
+      <div class="accordion-body p-0">
+        <div class="p-3">
 
-      <div class="card">
-        <div class="card-header">家族状況</div>
-        <div class="card-body">ここに家族情報など</div>
-      </div>
-      <div class="card">
-        <div class="card-header">住居状況</div>
-        <div class="card-body">ここに住居情報など</div>
-      </div>
-      <div class="card">
-        <div class="card-header">利用サービス</div>
-        <div class="card-body">ここにサービス内容など</div>
+            <!-- 家族① -->
+            <div class="mb-3">
+              <h6 class="fw-bold mb-3 text-primary">👤 家族 1</h6>
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <label class="form-label">家族氏名</label>
+                  <input type="text" name="family_name_1" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">続柄</label>
+                  <input type="text" name="relationship_1" class="form-control" placeholder="例：長男・配偶者など">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">連絡先</label>
+                  <input type="text" name="family_phone_1" class="form-control">
+                </div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <label class="form-label">同居の有無</label>
+                  <select name="living_together_1" class="form-select">
+                    <option value="">選択</option>
+                    <option value="同居">同居</option>
+                    <option value="別居">別居</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">介護の有無</label>
+                  <select name="is_caregiver_1" class="form-select">
+                    <option value="">選択</option>
+                    <option value="有">有</option>
+                    <option value="無">無</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">就労状況</label>
+                  <select name="working_status_1" class="form-select">
+                    <option value="">選択</option>
+                    <option value="就労中">就労中</option>
+                    <option value="退職済">退職済</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">備考</label>
+                <textarea name="family_note_1" class="form-control" rows="2" placeholder="補足があれば記入してください"></textarea>
+              </div>
+            </div>
+            <hr>
+
+            <!-- 家族② -->
+            <div class="mb-3">
+              <h6 class="fw-bold mb-3 text-primary">👤 家族 2</h6>
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <label class="form-label">家族氏名</label>
+                  <input type="text" name="family_name_2" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">続柄</label>
+                  <input type="text" name="relationship_2" class="form-control" placeholder="例：長男・配偶者など">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">連絡先</label>
+                  <input type="text" name="family_phone_2" class="form-control">
+                </div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <label class="form-label">同居の有無</label>
+                  <select name="living_together_2" class="form-select">
+                    <option value="">選択</option>
+                    <option value="同居">同居</option>
+                    <option value="別居">別居</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">介護の有無</label>
+                  <select name="is_caregiver_2" class="form-select">
+                    <option value="">選択</option>
+                    <option value="有">有</option>
+                    <option value="無">無</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">就労状況</label>
+                  <select name="working_status_2" class="form-select">
+                    <option value="">選択</option>
+                    <option value="就労中">就労中</option>
+                    <option value="退職済">退職済</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">備考</label>
+                <textarea name="family_note_2" class="form-control" rows="2" placeholder="補足があれば記入してください"></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="accordion mt-4" id="accordion-housing-env">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-housing-env">
+      <button class="accordion-button keep-bg collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse-housing-env"
+              aria-expanded="false" aria-controls="collapse-housing-env">
+        🏠 住居状況
+      </button>
+    </h2>
+    <div id="collapse-housing-env" class="accordion-collapse collapse"
+         aria-labelledby="heading-housing-env" data-bs-parent="#accordion-housing-env">
+      <div class="accordion-body p-3">
+
+<div class="row mb-4 align-items-start">
+  <!-- 左側ラベル -->
+  <div class="col-md-2">
+    <label class="form-label mb-0">家庭環境</label>
+  </div>
+
+  <!-- 右側ボタン群 -->
+  <div class="col-md-10">
+    <div class="btn-group flex-wrap" role="group" aria-label="家庭環境">
+      <input type="checkbox" class="btn-check" id="env1" name="household[]" value="家族同居">
+      <label class="btn btn-outline-primary btn-sm me-1 mb-1" for="env1">家族同居</label>
+
+      <input type="checkbox" class="btn-check" id="env2" name="household[]" value="一人暮らし">
+      <label class="btn btn-outline-primary btn-sm me-1 mb-1" for="env2">一人暮らし</label>
+
+      <input type="checkbox" class="btn-check" id="env3" name="household[]" value="高齢所帯">
+      <label class="btn btn-outline-primary btn-sm me-1 mb-1" for="env3">高齢所帯</label>
+
+      <input type="checkbox" class="btn-check" id="env4" name="household[]" value="日中独居">
+      <label class="btn btn-outline-primary btn-sm me-1 mb-1" for="env4">日中独居</label>
+
+      <input type="checkbox" class="btn-check" id="env5" name="household[]" value="二世帯住宅">
+      <label class="btn btn-outline-primary btn-sm me-1 mb-1" for="env5">二世帯住宅</label>
+    </div>
+  </div>
+</div>
+
+        <!-- ✅ 項目群：2〜3列レイアウト -->
+        <div class="row g-3">
+
+          <!-- 1行目 -->
+          <div class="col-md-3">
+            <label class="form-label">住居形態</label>
+            <select name="housing_type" class="form-select">
+              <option value="">選択</option>
+              <option value="一戸建て">一戸建て</option>
+              <option value="集合住宅">集合住宅</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">住宅権利</label>
+            <select name="housing_right" class="form-select">
+              <option value="">選択</option>
+              <option value="所有">所有</option>
+              <option value="賃貸">賃貸</option>
+              <option value="間借り">間借り</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">専有居室</label>
+            <select name="private_room" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">居室段差</label>
+            <select name="room_step" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+
+          <!-- 2行目 -->
+          <div class="col-md-4">
+            <label class="form-label">段差</label>
+            <select name="step" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">就寝</label>
+            <select name="bedding" class="form-select">
+              <option value="">選択</option>
+              <option value="畳・床">畳・床</option>
+              <option value="ベッド">ベッド</option>
+              <option value="リクライニングベッド">リクライニングベッド</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">冷暖房</label>
+            <select name="air_conditioning" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+
+          <!-- 3行目 -->
+          <div class="col-md-3">
+            <label class="form-label">トイレ</label>
+            <select name="toilet_type" class="form-select">
+              <option value="">選択</option>
+              <option value="洋式">洋式</option>
+              <option value="和式">和式</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">トイレ内手すり</label>
+            <select name="toilet_handle" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">浴室</label>
+            <select name="bathroom" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">浴室内手すり</label>
+            <select name="bathroom_handle" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+<div class="mt-2 mb-3">
+  <hr class="border-top border-1 border-secondary">
+</div>
+<!-- ▼ 住居写真アップロード＋表示 -->
+<div class="mb-3">
+  <label class="form-label fw-bold">住居の写真アップロード（複数可）</label>
+  <input type="file" name="housing_photos[]" accept="image/*" multiple class="form-control mb-2">
+
+  <!-- 最新2枚のみ表示 -->
+  <div class="d-flex flex-wrap gap-2 mt-2">
+    {% for img in housing_photos[:2] %}
+      <img src="{{ url_for('static', filename='uploads/' + img) }}" class="img-thumbnail" style="max-width: 150px;">
+    {% endfor %}
+  </div>
+
+  {% if housing_photos|length > 2 %}
+    <div class="mt-2">
+      <a href="{{ url_for('view_all_photos', category='housing') }}" class="btn btn-sm btn-outline-primary">
+        📷 すべての写真を見る
+      </a>
+    </div>
+  {% endif %}
+</div>
+<hr class="border-top border-1 border-secondary my-2">
+
+<!-- 新しい row スタート -->
+<div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">住宅改修</label>
+            <select name="housing_renovation" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">住宅改修の必要性</label>
+            <select name="renovation_need" class="form-select">
+              <option value="">選択</option>
+              <option value="有">有</option>
+              <option value="無">無</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion mt-4" id="accordion-usage">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading-usage">
+      <button class="accordion-button keep-bg collapsed" type="button"
+              data-bs-toggle="collapse" data-bs-target="#collapse-usage"
+              aria-expanded="false" aria-controls="collapse-usage">
+        👥 利用サービス
+      </button>
+    </h2>
+    <div id="collapse-usage" class="accordion-collapse collapse"
+         aria-labelledby="heading-usage" data-bs-parent="#accordion-usage">
+      <div class="accordion-body">
+
+        <!-- 介護サービス -->
+<!-- ▼ 各サービス共通の表示ボタン・結果・hidden -->
+<!-- 介護サービス -->
+<div class="mb-3 d-flex align-items-center">
+  <label class="form-label me-3 mb-0" style="min-width: 120px;">介護サービス</label>
+  <button type="button" class="btn btn-outline-primary btn-sm" onclick="openServiceModal('care')">選択</button>
+</div>
+<div id="selected-care" class="mb-2 small text-muted ms-2"></div>
+<input type="hidden" name="care_services" id="input-care">
+
+<div class="mb-3 d-flex align-items-center">
+  <label class="form-label me-3 mb-0" style="min-width: 120px;">福祉用具</label>
+  <button type="button" class="btn btn-outline-primary btn-sm" onclick="openServiceModal('welfare')">選択</button>
+</div>
+<div id="selected-welfare" class="mb-2 small text-muted ms-2"></div>
+<input type="hidden" name="welfare_items" id="input-welfare">
+
+        <!-- 上記以外のサービス -->
+        <div class="mb-3">
+          <label class="form-label">上記以外のサービス</label>
+          <textarea name="other_services" class="form-control" rows="2" placeholder="自由にご記入ください"></textarea>
+        </div>
+
+<!-- インフォーマルサービス -->
+<div class="mb-3 d-flex align-items-center">
+  <label class="form-label me-3 mb-0" style="min-width: 120px;">インフォーマルサービス</label>
+  <button type="button" class="btn btn-outline-primary btn-sm" onclick="openServiceModal('informal')">選択</button>
+</div>
+<div id="selected-informal" class="mb-2 small text-muted ms-2"></div>
+<input type="hidden" name="informal_services" id="input-informal">
+
+        <!-- 社会との関わり -->
+        <div class="mb-3">
+          <label class="form-label">社会との関わり</label>
+          <textarea name="social_connection" class="form-control" rows="2" placeholder="例：近所の集まりに週1回参加している"></textarea>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- ▼ 身体の状況 -->
     <div class="panel-content" id="panel-body">
@@ -430,5 +812,66 @@
     });
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const serviceOptions = {
+    care: ['訪問介護', '訪問入浴', '訪問看護', '訪問リハ', '通所介護', '通所リハ', 'ショートステイ'],
+    welfare: ['車椅子', '車椅子付属品', '特殊寝台', '特殊寝台付属品', '床ずれ防止用具', '体位変換器', '手すり', 'スロープ', '歩行器', '歩行補助つえ', '徘徊感知機器', '移動用リフト', '自動排泄処理装置'],
+    informal: ['オムツ支給', '食事支援', '排泄支援', 'リネンリース', '洗濯', '居室清掃', '喀痰吸引', '火災報知器', '自動消火器', '老人用電話', '寝具乾燥消毒', '電磁調理器', '緊急通報装置', 'ボランティア', '配食サービス', '介護慰労', 'タクシー券', 'マッサージ件']
+  };
+
+  let currentCategory = "";
+
+  function openServiceModal(category) {
+    currentCategory = category;
+    const options = serviceOptions[category];
+    const container = document.getElementById('modal-options');
+    container.innerHTML = "";
+
+    options.forEach((item, i) => {
+      const id = `${category}_${i}`;
+      container.innerHTML += `
+        <div class="col-md-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="${item}" id="${id}">
+            <label class="form-check-label" for="${id}">${item}</label>
+          </div>
+        </div>`;
+    });
+
+    const modal = new bootstrap.Modal(document.getElementById('serviceModal'));
+    modal.show();
+  }
+
+  function confirmSelection() {
+    const checkboxes = document.querySelectorAll('#modal-options input[type=checkbox]');
+    const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+
+    document.getElementById(`selected-${currentCategory}`).innerText = selected.join(', ');
+    document.getElementById(`input-${currentCategory}`).value = selected.join(',');
+
+    bootstrap.Modal.getInstance(document.getElementById('serviceModal')).hide();
+  }
+</script>
+<!-- ▼ モーダル共通部 -->
+<div class="modal fade" id="serviceModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">サービス選択</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-options" class="row"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+        <button class="btn btn-primary" onclick="confirmSelection()">決定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </body>
 </html>
